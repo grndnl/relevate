@@ -14,7 +14,7 @@ def download_papers(papers, split, downloaded):
     os.makedirs(split, exist_ok=True)
     for paper in tqdm(papers, desc=f"Downloading {split} papers"):
         if paper not in downloaded:
-            path = os.path.join('dataset'+split, paper+'.pdf')
+            path = os.path.join('qasper'+split, paper+'.pdf')
             try:
                 written_path, _ = urlretrieve(f"https://export.arxiv.org/pdf/{paper}.pdf", path)
             except urllib.error.URLError as e:
