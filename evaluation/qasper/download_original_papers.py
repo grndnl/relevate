@@ -37,24 +37,16 @@ def download_papers(papers, split, downloaded, filetypes):
 
 
 def main(filetype):
-    qasper_train = pd.read_json("dataset/qasper-train-v0.3.json", convert_axes=False).transpose()
-    qasper_dev = pd.read_json("dataset/qasper-dev-v0.3.json", convert_axes=False).transpose()
-    qasper_test = pd.read_json("dataset/qasper-test-v0.3.json", convert_axes=False).transpose()
-
-    split = 'train'
-    downloaded = get_all_names(split, "*.pdf")
-    papers_train = qasper_train.index.to_list()
-    download_papers(papers_train, split, downloaded, filetype)
-
-    split = 'dev'
-    downloaded = get_all_names(split, "*.pdf")
-    papers_dev = qasper_dev.index.to_list()
-    download_papers(papers_dev, split, downloaded, filetype)
-
-    split = 'test'
-    downloaded = get_all_names(split, "*.pdf")
-    papers_test = qasper_test.index.to_list()
-    download_papers(papers_test, split, downloaded, filetype)
+    for split in ['train', 'dev', 'test']:
+        qasper_papers = pd.read_json(f"dataset/qasper-{split}-v0.3.json", convert_axes=False).transpose()
+        if filetype == 'pdf':
+            downloaded = get_all_names(split, "*.pdf")
+        elif filetype == 'src':
+            downloaded = get_all_names('src' + split, "*")
+        else:
+            raise f"Filetype not supported: {filetype}"
+        papers = qasper_papers.index.to_list()
+        download_papers(papers, split, downloaded, filetype)
 
 
 if __name__ == '__main__':

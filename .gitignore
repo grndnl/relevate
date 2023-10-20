@@ -16,3 +16,4 @@
 /evaluation/scrolls/submission/data/generated_predictions.json
 /.idea/aws.xml
 /.idea/csv-editor.xml
+/evaluation/qasper_grobid/dataset/
