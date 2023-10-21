@@ -43,13 +43,13 @@ def download_papers(papers, split, downloaded, filetype):
 def main(filetypes):
     for filetype in filetypes:
         for split in ['train', 'dev', 'test']:
-            qasper_papers = pd.read_json(f"dataset/processed_original/qasper-{split}-v0.3.json", convert_axes=False).transpose()
+            qasper_papers = pd.read_json(f"dataset/original/qasper-{split}-v0.3.json", convert_axes=False).transpose()
             if filetype == 'pdf':
-                downloaded = get_all_names('pdf/' + split, "*.pdf")
+                downloaded = get_all_names('dataset/pdf/' + split, "*.pdf")
             elif filetype == 'src':
-                downloaded = get_all_names('source_zip/' + split, "*")
+                downloaded = get_all_names('dataset/source_zip/' + split, "*")
             elif filetype == 'html':
-                downloaded = get_all_names('html/' + split, "*")
+                downloaded = get_all_names('dataset/html/' + split, "*")
             else:
                 raise Exception(f"Filetype not supported: {filetype}")
             papers = qasper_papers.index.to_list()
