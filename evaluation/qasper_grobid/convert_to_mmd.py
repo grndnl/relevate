@@ -8,7 +8,7 @@ def get_all_files(directory, pattern):
 
 
 def save_dataset(dataset, split, out_path):
-    for paper_id in tqdm(dataset, "Saving dataset"):
+    for paper_id in tqdm(dataset, f"Saving {split} dataset"):
         out_dir = out_path / split / f"{paper_id}.mmd"
         out_dir.parent.mkdir(parents=True, exist_ok=True)
         with open(out_dir, 'w', encoding='utf-8') as f:
@@ -20,7 +20,7 @@ def convert_dataset(path, split, out_path):
     json_paths = get_all_files(path / split, "*.json")
 
     dataset = {}
-    for json_path in tqdm(json_paths, desc="Processing inputs"):
+    for json_path in tqdm(json_paths, desc=f"Processing {split} inputs"):
         with open(json_path, 'r') as f:
             data = json.load(f)
         paper_id = json_path.stem
