@@ -17,3 +17,4 @@
 /.idea/aws.xml
 /.idea/csv-editor.xml
 /evaluation/qasper_grobid/dataset/
+/evaluation/qasper_grobid/dataset_mmd/
