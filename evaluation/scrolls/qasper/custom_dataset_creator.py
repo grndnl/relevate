@@ -1,9 +1,9 @@
 import os
-
 import pandas as pd
 from pathlib import Path
 import json
 from tqdm import tqdm
+
 
 def get_all_files(directory, pattern):
     return [f for f in Path(directory).glob(pattern)]
@@ -96,8 +96,7 @@ if __name__ == '__main__':
     custom_dataset_path = Path("../../qasper_grobid/dataset")
     custom_dataset_name = 'scrolls_qasper_grobid'
 
-    # custom_dataset_path = Path("../../qasper/processed_nougat")
+    # custom_dataset_path = Path("../../qasper/ground_truth_mmd")
     # custom_dataset_name = 'scrolls_qasper_source'
-
 
     main(custom_dataset_path, custom_dataset_name)
