@@ -18,3 +18,8 @@
 /.idea/csv-editor.xml
 /evaluation/qasper_grobid/dataset/
 /evaluation/qasper_grobid/dataset_mmd/
+/evaluation/scrolls/scrolls_qasper_grobid/
+/evaluation/scrolls/scrolls_qasper_nougat/
+/evaluation/scrolls/scrolls_qasper_pypdf/
+/evaluation/scrolls/submission/data/
+/evaluation/scrolls/scrolls_qasper_source/

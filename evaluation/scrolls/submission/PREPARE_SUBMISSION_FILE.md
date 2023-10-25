@@ -17,7 +17,11 @@ Please set:
 Run:
 
 ```python
-python prepare_submission.py --gov_report_file data/mock_gov_report.json --summ_screen_file data/mock_sfd.json --qmsum_file data/mock_qmsum.json --narrative_qa_file data/mock_nqa.json --qasper_file data/generated_predictions.json --quality_file data/mock_qual.json --contract_nli_file data/mock_cnli.json --output_dir submission
+python prepare_submission.py --qasper_file data/generated_predictions.json --gov_report_file data/original/mock_gov_report.json --summ_screen_file data/original/mock_sfd.json --qmsum_file data/original/mock_qmsum.json --narrative_qa_file data/original/mock_nqa.json --quality_file data/original/mock_qual.json --contract_nli_file data/original/mock_cnli.json --output_dir submission/original
+python prepare_submission.py --qasper_file data/grobid/generated_predictions.json --gov_report_file data/original/mock_gov_report.json --summ_screen_file data/original/mock_sfd.json --qmsum_file data/original/mock_qmsum.json --narrative_qa_file data/original/mock_nqa.json --quality_file data/original/mock_qual.json --contract_nli_file data/original/mock_cnli.json --output_dir submission/grobid
+python prepare_submission.py --qasper_file data/nougat/generated_predictions.json --gov_report_file data/original/mock_gov_report.json --summ_screen_file data/original/mock_sfd.json --qmsum_file data/original/mock_qmsum.json --narrative_qa_file data/original/mock_nqa.json --quality_file data/original/mock_qual.json --contract_nli_file data/original/mock_cnli.json --output_dir submission/nougat
+python prepare_submission.py --qasper_file data/pypdf/generated_predictions.json --gov_report_file data/original/mock_gov_report.json --summ_screen_file data/original/mock_sfd.json --qmsum_file data/original/mock_qmsum.json --narrative_qa_file data/original/mock_nqa.json --quality_file data/original/mock_qual.json --contract_nli_file data/original/mock_cnli.json --output_dir submission/pypdf
+python prepare_submission.py --qasper_file data/source/generated_predictions.json --gov_report_file data/original/mock_gov_report.json --summ_screen_file data/original/mock_sfd.json --qmsum_file data/original/mock_qmsum.json --narrative_qa_file data/original/mock_nqa.json --quality_file data/original/mock_qual.json --contract_nli_file data/original/mock_cnli.json --output_dir submission/source
 ```
 
 To verify your output file is valid, please see [Verify Submission File](https://github.com/tau-nlp/scrolls/blob/main/evaluator/VERIFY_SUBMISSION_FILE.md).

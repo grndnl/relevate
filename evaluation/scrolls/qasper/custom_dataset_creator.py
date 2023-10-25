@@ -9,6 +9,18 @@ def get_all_files(directory, pattern):
     return [f for f in Path(directory).glob(pattern)]
 
 
+def process_text_files(path, split, format):
+    paths = get_all_files(path / split, f"*.{format}")
+
+    dataset = {}
+    for path in paths:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = f.read()
+        paper_id = path.stem
+        dataset[paper_id[:10]] = '\n' + data
+    return dataset
+
+
 def read_custom_dataset(path, split, custom_dataset_name):
     if custom_dataset_name == "scrolls_qasper_grobid":
         json_paths = get_all_files(path / split, "*.json")
@@ -31,8 +43,10 @@ def read_custom_dataset(path, split, custom_dataset_name):
                 prior_section = section
 
             dataset[paper_id[:10]] = " ".join(paper_text)
-    elif custom_dataset_name == "scrolls_qasper_source":
-        raise Exception(f"Custom dataset not yet supported: {custom_dataset_name}")
+    elif custom_dataset_name == "scrolls_qasper_pypdf":
+        dataset = process_text_files(path, split, 'txt')
+    elif custom_dataset_name == "scrolls_qasper_nougat" or "scrolls_qasper_source":
+        dataset = process_text_files(path, split, 'mmd')
     else:
         raise Exception(f"Custom dataset not supported: {custom_dataset_name}")
 
@@ -83,20 +97,26 @@ def main(custom_dataset_path, custom_dataset_name):
             scrolls_qasper.loc[index, 'input'] = scrolls_qasper.loc[index, 'input'] + '\n' + text
 
         # save the new dataframe
-        dest = Path(f"../../{custom_dataset_name}/{scrolls_split}.jsonl")
+        dest = Path(f"../../scrolls/{custom_dataset_name}/{scrolls_split}.jsonl")
         os.makedirs(dest.parent, exist_ok=True)
         scrolls_qasper.to_json(dest, orient='records', lines=True)
 
-        print(f"Length of {custom_dataset_name} {scrolls_split} dataset: {len(custom_dataset)}")
+        print(f"Length of {custom_dataset_name} {scrolls_split} dataset: {len(scrolls_qasper)}")
 
     return
 
 
 if __name__ == '__main__':
-    custom_dataset_path = Path("../../qasper_grobid/dataset")
-    custom_dataset_name = 'scrolls_qasper_grobid'
+    # custom_dataset_path = Path("../../dataset/grobid/dataset")
+    # custom_dataset_name = 'scrolls_qasper_grobid'
 
-    # custom_dataset_path = Path("../../qasper/ground_truth_mmd")
-    # custom_dataset_name = 'scrolls_qasper_source'
+    # dataset_path = Path("../../qasper/dataset/nougat")
+    # custom_dataset_name = 'scrolls_qasper_nougat'
 
-    main(custom_dataset_path, custom_dataset_name)
+    # dataset_path = Path("../../qasper/dataset/processed_pypdf")
+    # custom_dataset_name = 'scrolls_qasper_pypdf'
+
+    dataset_path = Path("../../qasper/dataset/ground_truth_mmd")
+    custom_dataset_name = 'scrolls_qasper_source'
+
+    main(dataset_path, custom_dataset_name)
