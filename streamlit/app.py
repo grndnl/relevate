@@ -34,8 +34,14 @@ def process_pdfs(files):
 
 
 # clean tmp folder and delete zip file if it exists
-shutil.rmtree('tmp', ignore_errors=True)
-os.remove('processed_files.zip') if os.path.exists('processed_files.zip') else None
+# shutil.rmtree('tmp', ignore_errors=True)
+# os.remove('processed_files.zip') if os.path.exists('processed_files.zip') else None
+
+
+if 'processed_files' not in st.session_state:
+    st.session_state['processed_files'] = False
+# st.write(st.session_state)
+
 
 # Title of the page
 st.title('📄 Clean Data is All You Need')
@@ -46,16 +52,26 @@ with st.sidebar:
     uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type='pdf')
     process_button = st.button('Process PDFs')  # , disabled=True)
 
+# Columns
+# uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type='pdf')
+# process_button = st.button('Process PDFs')  # , disabled=True)
+
 # Main area
 # if uploaded_files:
 #     # enable process button
 #     if process_button.disabled:
 #         process_button.disabled = False
 
+if st.session_state.processed_files:
+    st.success('Processing complete!')
+    with open('processed_files.zip', 'rb') as f:
+        download_btn = st.download_button(label=f'processed_files.zip', file_name=f'processed_files.zip', data=f)
+
 if uploaded_files and process_button:
     with st.spinner('Processing PDFs...'):
         processed_files = process_pdfs(uploaded_files)
     st.success('Processing complete!')
+    st.session_state.processed_files = True
     # st.write('**Processed Files:**')
 
     # zip processed files
