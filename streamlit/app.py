@@ -5,6 +5,7 @@ import time
 import shutil
 import os
 
+
 def process_pdfs(files):
     processed_files = []
 
@@ -43,7 +44,7 @@ st.title('Clean Data is All You Need')
 with st.sidebar:
     st.header('Controls')
     uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type='pdf')
-    process_button = st.button('Process PDFs')  #, disabled=True)
+    process_button = st.button('Process PDFs')  # , disabled=True)
 
 # Main area
 # if uploaded_files:
@@ -69,4 +70,3 @@ if uploaded_files and process_button:
         download_btn = st.download_button(label=f'processed_files.zip', file_name=f'processed_files.zip', data=f)
     # if download_btn:
     #     st.write("**Files downloaded**")
-
