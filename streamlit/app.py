@@ -19,7 +19,7 @@ def process_pdfs(files):
 
         # Extract text from the first page
         first_page = pdf_reader.pages[0]
-        text = first_page.extractText()
+        text = first_page.extract_text()
 
         # Write the text to a text file
         out_dir = tmp_folder / (file.name[:-4] + '.txt')
