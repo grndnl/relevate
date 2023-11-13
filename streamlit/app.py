@@ -1,5 +1,5 @@
 import streamlit as st
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader
 from pathlib import Path
 import time
 import shutil
@@ -15,7 +15,7 @@ def process_pdfs(files):
 
     for file in files:
         # Read the PDF file from the uploaded file
-        pdf_reader = PdfFileReader(file)
+        pdf_reader = PdfReader(file)
 
         # Extract text from the first page
         first_page = pdf_reader.getPage(0)
