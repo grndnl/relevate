@@ -18,7 +18,7 @@ def process_pdfs(files):
         pdf_reader = PdfReader(file)
 
         # Extract text from the first page
-        first_page = pdf_reader.getPage(0)
+        first_page = pdf_reader.pages[0]
         text = first_page.extractText()
 
         # Write the text to a text file
