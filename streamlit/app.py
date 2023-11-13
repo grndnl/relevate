@@ -38,7 +38,7 @@ shutil.rmtree('tmp', ignore_errors=True)
 os.remove('processed_files.zip') if os.path.exists('processed_files.zip') else None
 
 # Title of the page
-st.title('Clean Data is All You Need')
+st.title('📄 Clean Data is All You Need')
 
 # Sidebar for navigation and control
 with st.sidebar:
