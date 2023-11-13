@@ -52,7 +52,7 @@ def enable():
 if 'processed_files' not in st.session_state:
     st.session_state['processed_files'] = False
 if "disabled" not in st.session_state:
-    st.session_state.disabled = False
+    st.session_state.disabled = True
 
 
 # Title of the page
