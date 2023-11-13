@@ -33,14 +33,26 @@ def process_pdfs(files):
     return processed_files
 
 
+def disable():
+    st.session_state.disabled = True
+
+
+def enable():
+    st.session_state.disabled = False
+    st.session_state['processed_files'] = False
+
+# Clean local files  # TODO
 # clean tmp folder and delete zip file if it exists
 # shutil.rmtree('tmp', ignore_errors=True)
 # os.remove('processed_files.zip') if os.path.exists('processed_files.zip') else None
 
 
+# Session State
+# st.write(st.session_state)
 if 'processed_files' not in st.session_state:
     st.session_state['processed_files'] = False
-# st.write(st.session_state)
+if "disabled" not in st.session_state:
+    st.session_state.disabled = False
 
 
 # Title of the page
@@ -49,18 +61,9 @@ st.title('📄 Clean Data is All You Need')
 # Sidebar for navigation and control
 with st.sidebar:
     st.header('Controls')
-    uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type='pdf')
-    process_button = st.button('Process PDFs')  # , disabled=True)
+    uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type='pdf', on_change=enable)
+    process_button = st.button('Process PDFs', type='primary', on_click=disable, disabled=st.session_state.disabled)
 
-# Columns
-# uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type='pdf')
-# process_button = st.button('Process PDFs')  # , disabled=True)
-
-# Main area
-# if uploaded_files:
-#     # enable process button
-#     if process_button.disabled:
-#         process_button.disabled = False
 
 if st.session_state.processed_files:
     st.success('Processing complete!')
@@ -72,17 +75,9 @@ if uploaded_files and process_button:
         processed_files = process_pdfs(uploaded_files)
     st.success('Processing complete!')
     st.session_state.processed_files = True
-    # st.write('**Processed Files:**')
 
     # zip processed files
     shutil.make_archive('processed_files', 'zip', 'tmp')
 
-    # for file in processed_files:
-    #     # load file as binary
-    #     data = file.read_bytes()
-    #     file_name = file.stem[:-4]
-    #     st.download_button(label=f'{file_name}.txt', file_name=f'{file_name}.txt', data=data)
     with open('processed_files.zip', 'rb') as f:
         download_btn = st.download_button(label=f'processed_files.zip', file_name=f'processed_files.zip', data=f)
-    # if download_btn:
-    #     st.write("**Files downloaded**")
