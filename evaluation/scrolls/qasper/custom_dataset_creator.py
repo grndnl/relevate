@@ -43,7 +43,7 @@ def read_custom_dataset(path, split, custom_dataset_name):
                 prior_section = section
 
             dataset[paper_id[:10]] = " ".join(paper_text)
-    elif custom_dataset_name == "scrolls_qasper_pypdf":
+    elif custom_dataset_name == "scrolls_qasper_pypdf" or "out_method":
         dataset = process_text_files(path, split, 'txt')
     elif custom_dataset_name == "scrolls_qasper_nougat" or "scrolls_qasper_source":
         dataset = process_text_files(path, split, 'mmd')
@@ -65,7 +65,7 @@ def main(custom_dataset_path, custom_dataset_name):
 
         # Load scrolls qasper data
         scrolls_qasper = pd.read_json(f"{scrolls_split}.jsonl", lines=True)
-        print(f"Length of {scrolls_split} original dataset: {len(scrolls_qasper)}")
+        # print(f"Length of {scrolls_split} original dataset: {len(scrolls_qasper)}")
 
         # Erase the input column after the first '\n\n'
         scrolls_qasper['input'] = scrolls_qasper['input'].apply(lambda row: row.split("\n\n")[0])
@@ -101,7 +101,7 @@ def main(custom_dataset_path, custom_dataset_name):
         os.makedirs(dest.parent, exist_ok=True)
         scrolls_qasper.to_json(dest, orient='records', lines=True)
 
-        print(f"Length of {custom_dataset_name} {scrolls_split} dataset: {len(scrolls_qasper)}")
+        # print(f"Length of {custom_dataset_name} {scrolls_split} dataset: {len(scrolls_qasper)}")
 
     return
 
@@ -116,7 +116,10 @@ if __name__ == '__main__':
     # dataset_path = Path("../../qasper/dataset/processed_pypdf")
     # custom_dataset_name = 'scrolls_qasper_pypdf'
 
-    dataset_path = Path("../../qasper/dataset/ground_truth_mmd")
-    custom_dataset_name = 'scrolls_qasper_source'
+    # dataset_path = Path("../../qasper/dataset/ground_truth_mmd")
+    # custom_dataset_name = 'scrolls_qasper_source'
+
+    dataset_path = Path("../../qasper/dataset/our_method")
+    custom_dataset_name = 'scrolls_qasper_our_method'
 
     main(dataset_path, custom_dataset_name)
