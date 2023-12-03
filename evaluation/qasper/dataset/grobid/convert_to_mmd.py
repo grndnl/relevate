@@ -26,6 +26,14 @@ def convert_dataset(path, split, out_path):
         paper_id = json_path.stem
 
         paper_text = []
+        # title and authors
+        paper_text.append(data['title'] + '\n')
+        paper_text.append(', '.join([author['first'] + ' ' + author['last'] + '\n' for author in data['authors']]) + '\n\n')
+
+        # abstract
+        paper_text.append('Abstract\n\n' + data['abstract'] + '\n\n')
+
+        # Main text
         prior_section = ''
         for sentence in data['pdf_parse']['body_text']:
             text = sentence['text']
@@ -35,6 +43,11 @@ def convert_dataset(path, split, out_path):
             else:
                 paper_text.append(text)
             prior_section = section
+
+        # References
+        paper_text.append('\n\nReferences\n')
+        for entry in data['pdf_parse']['bib_entries']:
+            paper_text.append('\n* ' + data['pdf_parse']['bib_entries'][entry]['raw_text'])
 
         dataset[paper_id[:10]] = " ".join(paper_text)
 
